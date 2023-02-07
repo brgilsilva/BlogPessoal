@@ -5,35 +5,39 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_postagens")
 public class Postagem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "o atributo título é obrigatório!")
-    @Size(min = 5, max = 100, message = "O atributo titulo, no minimo 5 e máximo 100!")
+    @NotBlank(message = "O Atributo título é Obrigatório!")
+    @Size(min = 5, max = 100, message = "O Atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
     private String titulo;
 
-    @NotBlank(message = "o atributo texto é obrigatório!")
-    @Size(min = 10, max = 1000, message = "O atributo texto deve conter no minimo 10 e no maximo 1000 caracteres")
+    @NotBlank(message = "O Atributo texto é Obrigatório!")
+    @Size(min = 10, max = 1000, message = "O Atributo texto deve conter no mínimo 10 e no máximo 1000 caracteres")
     private String texto;
 
     @UpdateTimestamp
     private LocalDateTime data;
 
-    @ManyToOne //chave estrangeira
+    @ManyToOne
     @JsonIgnoreProperties("postagem")
     private Tema tema;
 
+    @ManyToOne
+    @JsonIgnoreProperties("postagem")
+    private Usuario usuario;
+
+    /*Insira os Getters and Setters*/
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -41,7 +45,7 @@ public class Postagem {
     }
 
     public String getTitulo() {
-        return titulo;
+        return this.titulo;
     }
 
     public void setTitulo(String titulo) {
@@ -49,7 +53,7 @@ public class Postagem {
     }
 
     public String getTexto() {
-        return texto;
+        return this.texto;
     }
 
     public void setTexto(String texto) {
@@ -57,7 +61,7 @@ public class Postagem {
     }
 
     public LocalDateTime getData() {
-        return data;
+        return this.data;
     }
 
     public void setData(LocalDateTime data) {
@@ -65,11 +69,19 @@ public class Postagem {
     }
 
     public Tema getTema() {
-        return tema;
+        return this.tema;
     }
 
     public void setTema(Tema tema) {
         this.tema = tema;
     }
-}
 
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+}
